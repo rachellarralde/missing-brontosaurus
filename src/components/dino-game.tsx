@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 const RecordIcon = () => (
   <svg 
-    width="32" 
-    height="32" 
+    width="40" 
+    height="40" 
     viewBox="0 0 24 24" 
     className="text-foreground"
   >
@@ -42,13 +42,10 @@ const TurntableIcon = () => (
   </svg>
 );
 
-type ObstacleType = 'single' | 'stacked' | 'turntable';
+type ObstacleType = 'single' | 'turntable';
 
 const getObstacleType = (score: number): ObstacleType => {
-  const cycle = score % 750;
-  if (cycle < 250) return 'single';
-  if (cycle < 500) return 'stacked';
-  return 'turntable';
+  return score % 500 < 250 ? 'single' : 'turntable';
 };
 
 export default function Component() {
@@ -56,13 +53,13 @@ export default function Component() {
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(366)
   const [isJumping, setIsJumping] = useState(false)
-  const [isDucking, setIsDucking] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const dinoRef = useRef<HTMLDivElement>(null)
   const obstacleRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<number>()
   const [obstacleType, setObstacleType] = useState<ObstacleType>('single')
   const [speed, setSpeed] = useState(2)
+  const obstacleSpawnedRef = useRef(false);
 
   const calculateSpeed = useCallback((currentScore: number): number => {
     if (currentScore < 500) return 2;
@@ -77,6 +74,7 @@ export default function Component() {
     setGameOver(false)
     setScore(0)
     setSpeed(2)
+    obstacleSpawnedRef.current = false;
   }, []);
 
   const jump = useCallback(() => {
@@ -86,12 +84,6 @@ export default function Component() {
     }
   }, [gameStarted, isJumping, gameOver]);
 
-  const handleKeyUp = useCallback((event: KeyboardEvent) => {
-    if (event.code === 'ArrowDown') {
-      setIsDucking(false)
-    }
-  }, []);
-
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.code === 'Space') {
       event.preventDefault();
@@ -100,9 +92,6 @@ export default function Component() {
       } else {
         jump();
       }
-    } else if (event.code === 'ArrowDown') {
-      event.preventDefault();
-      setIsDucking(true);
     }
   }, [gameStarted, jump, startGame]);
 
@@ -111,15 +100,20 @@ export default function Component() {
       if (dinoRef.current && obstacleRef.current) {
         const dinoRect = dinoRef.current.getBoundingClientRect()
         const obstacleRect = obstacleRef.current.getBoundingClientRect()
-
+        
+        const collisionThreshold = 10
+        
         if (
-          dinoRect.right > obstacleRect.left &&
-          dinoRect.left < obstacleRect.right &&
-          dinoRect.bottom > obstacleRect.top &&
-          dinoRect.top < obstacleRect.bottom
+          dinoRect.right - collisionThreshold > obstacleRect.left &&
+          dinoRect.left + collisionThreshold < obstacleRect.right &&
+          dinoRect.bottom - collisionThreshold > obstacleRect.top &&
+          dinoRect.top + collisionThreshold < obstacleRect.bottom
         ) {
           setGameOver(true)
           setGameStarted(false)
+          if (frameRef.current) {
+            cancelAnimationFrame(frameRef.current)
+          }
         }
       }
     }
@@ -127,24 +121,32 @@ export default function Component() {
     const gameLoop = () => {
       if (gameStarted && !gameOver) {
         checkCollision()
-        setScore(prev => {
-          const newScore = prev + 1;
-          setObstacleType(getObstacleType(newScore));
-          return newScore;
-        })
+        
+        if (obstacleRef.current) {
+          const obstacleRect = obstacleRef.current.getBoundingClientRect();
+          if (obstacleRect.right < 0) {
+            obstacleSpawnedRef.current = false;
+          }
+        }
+        
+        if (!obstacleSpawnedRef.current) {
+          const newType = getObstacleType(score);
+          setObstacleType(newType);
+          obstacleSpawnedRef.current = true;
+        }
+        
+        setScore(prev => prev + 1);
       }
       frameRef.current = requestAnimationFrame(gameLoop)
     }
 
     window.addEventListener('keydown', handleKeyPress)
-    window.addEventListener('keyup', handleKeyUp)
     if (gameStarted) {
       frameRef.current = requestAnimationFrame(gameLoop)
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyPress)
-      window.removeEventListener('keyup', handleKeyUp)
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current)
       }
@@ -178,7 +180,7 @@ export default function Component() {
       )}
 
       <div className="text-center mb-8">
-        <p className="text-sm mb-8 text-foreground">Space to start the game online and jump, use down arrow (↓) to duck.</p>
+        <p className="text-sm mb-8 text-foreground">Press the Spacebar to start the game and jump.</p>
       </div>
 
       <div className="w-full max-w-2xl">
@@ -206,8 +208,8 @@ export default function Component() {
               src="/image.png"
               alt="Dinosaur"
               width={100}
-              height={isDucking ? 60 : 120}
-              className={`object-contain ${isDucking ? 'scale-y-50' : ''}`}
+              height={120}
+              className="object-contain"
               priority
             />
           </div>
@@ -216,31 +218,21 @@ export default function Component() {
           {gameStarted && (
             <div
               ref={obstacleRef}
-              className="absolute bottom-0 right-0 animate-obstacle"
+              className="absolute right-[-40px] bottom-0 animate-obstacle h-[40px] w-[40px]"
               style={{
-                animationDuration: `${speed}s`
+                animationDuration: `${speed}s`,
+                willChange: 'transform'
               }}
             >
-              <div className="relative">
-                {obstacleType === 'stacked' ? (
-                  <>
-                    <div className="absolute bottom-8 animate-spin-slow">
-                      <RecordIcon />
-                    </div>
-                    <div className="absolute bottom-0 animate-spin-slow">
-                      <RecordIcon />
-                    </div>
-                  </>
-                ) : obstacleType === 'turntable' ? (
-                  <div className="animate-spin-slow">
-                    <TurntableIcon />
-                  </div>
-                ) : (
-                  <div className="animate-spin-slow">
-                    <RecordIcon />
-                  </div>
-                )}
-              </div>
+              {obstacleType === 'turntable' ? (
+                <div className="animate-spin-slow">
+                  <TurntableIcon />
+                </div>
+              ) : (
+                <div className="animate-spin-slow">
+                  <RecordIcon />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -256,7 +248,7 @@ export default function Component() {
         }
         @keyframes obstacle {
           from {
-            right: -50px;
+            right: -40px;
           }
           to {
             right: 100%;
@@ -264,6 +256,7 @@ export default function Component() {
         }
         .animate-obstacle {
           animation: obstacle linear infinite;
+          will-change: transform;
         }
         @keyframes spin {
           from {
