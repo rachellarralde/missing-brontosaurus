@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image'
 
 const RecordIcon = () => (
@@ -79,19 +79,19 @@ export default function Component() {
     }
   }
 
-  const handleKeyPress = (event: KeyboardEvent) => {
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.code === 'Space') {
-      event.preventDefault()
+      event.preventDefault();
       if (!gameStarted) {
-        startGame()
+        startGame();
       } else {
-        jump()
+        jump();
       }
     } else if (event.code === 'ArrowDown') {
-      event.preventDefault()
-      setIsDucking(true)
+      event.preventDefault();
+      setIsDucking(true);
     }
-  }
+  }, [gameStarted, gameOver, startGame, jump]);
 
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.code === 'ArrowDown') {
