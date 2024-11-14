@@ -64,20 +64,33 @@ export default function Component() {
   const [obstacleType, setObstacleType] = useState<ObstacleType>('single')
   const [speed, setSpeed] = useState(2)
 
-  const calculateSpeed = (currentScore: number): number => {
+  const calculateSpeed = useCallback((currentScore: number): number => {
     if (currentScore < 500) return 2;
     if (currentScore < 1000) return 1.7;
     if (currentScore < 1500) return 1.4;
     if (currentScore < 2000) return 1.2;
     return Math.max(1, 2 - (currentScore / 2500));
-  }
+  }, []);
 
-  const jump = () => {
+  const startGame = useCallback(() => {
+    setGameStarted(true)
+    setGameOver(false)
+    setScore(0)
+    setSpeed(2)
+  }, []);
+
+  const jump = useCallback(() => {
     if (!isJumping && gameStarted && !gameOver) {
       setIsJumping(true)
       setTimeout(() => setIsJumping(false), 500)
     }
-  }
+  }, [gameStarted, isJumping, gameOver]);
+
+  const handleKeyUp = useCallback((event: KeyboardEvent) => {
+    if (event.code === 'ArrowDown') {
+      setIsDucking(false)
+    }
+  }, []);
 
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     if (event.code === 'Space') {
@@ -91,20 +104,7 @@ export default function Component() {
       event.preventDefault();
       setIsDucking(true);
     }
-  }, [gameStarted, gameOver, startGame, jump]);
-
-  const handleKeyUp = (event: KeyboardEvent) => {
-    if (event.code === 'ArrowDown') {
-      setIsDucking(false)
-    }
-  }
-
-  const startGame = () => {
-    setGameStarted(true)
-    setGameOver(false)
-    setScore(0)
-    setSpeed(2)
-  }
+  }, [gameStarted, jump, startGame]);
 
   useEffect(() => {
     const checkCollision = () => {
