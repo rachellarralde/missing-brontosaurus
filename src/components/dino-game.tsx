@@ -205,7 +205,7 @@ export default function Component() {
             }`}
           >
             <Image
-              src="/image.png"
+              src="/logos/game-image.png"
               alt="Dinosaur"
               width={100}
               height={120}
