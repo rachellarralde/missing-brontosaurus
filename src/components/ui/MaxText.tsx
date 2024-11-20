@@ -6,6 +6,8 @@ import { useEffect, useRef } from "react"
 interface MaxTextProps {
     text: string;
     textAlign?: 'left' | 'center' | 'right';
+    topMarginPercent: number;
+    bottomMarginPercent: number;
 }
 
 const styleText = (svgElement: SVGSVGElement, props: MaxTextProps) => {
@@ -34,8 +36,12 @@ const styleText = (svgElement: SVGSVGElement, props: MaxTextProps) => {
         // Shrinkwrap the SVG viewBox to the bounding box of its contents
         const bbox = svgElement.getBBox();
         // Set height to 1 unit larger than bounding box, to avoid cropping
-        const height = bbox.height + 1
-        svgElement.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${height}`);
+        const height = bbox.height + 1;
+        const topMargin = (props.topMarginPercent ?? 0) * height;
+        const bottomMargin = (props.bottomMarginPercent ?? 0) * height;
+        const viewportY = bbox.y + topMargin;
+        const viewportHeight = bbox.height + 1 - topMargin - bottomMargin;
+        svgElement.setAttribute('viewBox', `${bbox.x} ${viewportY} ${bbox.width} ${viewportHeight}`);
         // Make SVG element visible
         svgElement.style.visibility = 'visible';
     }
@@ -65,6 +71,7 @@ const MaxText: React.FC<MaxTextProps> = (props: MaxTextProps) => {
     const svgElement = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
+        console.log(props.topMarginPercent, props.bottomMarginPercent);
         if (svgElement.current) {
             insertText(svgElement.current, props);
         }
