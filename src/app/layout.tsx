@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
+import { defaultFont } from "./typography";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { geistSans, geistMono } from "./typography";
 
 export const metadata: Metadata = {
   title: "Missing Brontosaurus",
@@ -25,9 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
-      >
+      <body className={`${defaultFont.variable} antialiased bg-background`}>
         <Navbar />
         <main className="pt-12 pb-16">
           {children}

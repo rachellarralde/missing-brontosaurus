@@ -1,23 +1,28 @@
 import Link from 'next/link'
+import MaxText from './ui/MaxText'
+
+const carnotaurusTopMarginPercent = 0.19;
+const carnotaurusBottomMarginPercent = 0.28;
 
 export default function Navbar() {
   return (
-    <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-sm border-b border-muted z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-12 items-center">
-          <div className="flex items-center">
-            <span className="text-foreground font-bold text-sm">Missing Brontosaurus</span>
+    <nav className="">
+      <Link href="/">
+        <div className="grid xl:grid-cols-7 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1">
+          <div className="col-span-2 self-center">
+            <MaxText text="MISSING" topMarginPercent={carnotaurusTopMarginPercent} bottomMarginPercent={carnotaurusBottomMarginPercent} />
           </div>
-          <div className="flex space-x-8">
-            <Link href="/" className="text-foreground text-sm hover:text-muted-foreground transition-colors">
-              Home
-            </Link>
-            <Link href="/about" className="text-foreground text-sm hover:text-muted-foreground transition-colors">
-              About
-            </Link>
+          <div className="col-span-1 self-center content-center">
+            <img src="/logos/tight-crop.png" alt="A brontosaurus with a bold question mark" />
+          </div>
+          <div className="col-span-2 self-center">
+            <MaxText text="BRONTO" topMarginPercent={carnotaurusTopMarginPercent} bottomMarginPercent={carnotaurusBottomMarginPercent} />
+          </div>
+          <div className="col-span-2 self-center">
+            <MaxText text="SAURUS" topMarginPercent={carnotaurusTopMarginPercent} bottomMarginPercent={carnotaurusBottomMarginPercent} />
           </div>
         </div>
-      </div>
+      </Link>
     </nav>
   )
-} 
+}

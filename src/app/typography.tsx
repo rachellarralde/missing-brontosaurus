@@ -1,9 +1,10 @@
 import localFont from "next/font/local";
 
-export const pacificaSans = localFont({
-    src: "./fonts/Pacifica-Condensed-Regular.ttf",
-    variable: "--font-pacifica-sans",
-    weight: "400",
+
+export const carnotaurus = localFont({
+  src: "./fonts/Carnotaurus.ttf",
+  variable: "--font-default",
+  weight: "400",
 });
 
 export const geistSans = localFont({
@@ -18,3 +19,4 @@ export const geistMono = localFont({
     weight: "100 900",
   });
   
+export const defaultFont = carnotaurus;
