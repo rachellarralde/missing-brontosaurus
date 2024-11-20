@@ -13,8 +13,8 @@ interface MaxTextProps {
 const styleText = (svgElement: SVGSVGElement, props: MaxTextProps) => {
     const align = props.textAlign ?? 'center'
     if (align == 'center') {
-        var maxTextWidth = 0;
-        var thisTextWidth = 0;
+        let maxTextWidth = 0;
+        let thisTextWidth = 0;
         // Get width of widest line
         for (const text of svgElement.children) {
             if (text instanceof SVGTextElement) {
@@ -55,7 +55,7 @@ const insertText = (svgElement: SVGSVGElement, props: MaxTextProps) => {
     let dy = 0;
     props.text.split('/').forEach(function (line) {
         // Put each line of text into its own SVG <text> element
-        let svgText = document.createElementNS(svgNS, 'text');
+        const svgText = document.createElementNS(svgNS, 'text');
         if (dy > 0) {
             svgText.setAttribute('dy', dy.toString())
         }
@@ -71,11 +71,10 @@ const MaxText: React.FC<MaxTextProps> = (props: MaxTextProps) => {
     const svgElement = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
-        console.log(props.topMarginPercent, props.bottomMarginPercent);
         if (svgElement.current) {
             insertText(svgElement.current, props);
         }
-    }, [svgElement, props.text]);
+    }, [svgElement, props]);
 
     return (
         <div className="w-full">
