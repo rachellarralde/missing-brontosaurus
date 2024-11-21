@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { defaultFont } from "./typography";
 import "./globals.css";
 import Navbar from "@/components/navbar";
-//import Footer from "@/components/footer";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Missing Brontosaurus",
-  description: "Record label",
+  description: "A Record Label by NAIAD",
   icons: {
     icon: [
       {
@@ -30,7 +30,7 @@ export default function RootLayout({
         <main className="w-full flex justify-center">
           {children}
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
