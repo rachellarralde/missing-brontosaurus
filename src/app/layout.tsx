@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${defaultFont.variable} antialiased bg-background`}>
         <Navbar />
-        <main className="">
+        <main className="w-full flex justify-center">
           {children}
         </main>
         {/* <Footer /> */}
