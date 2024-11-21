@@ -27,10 +27,10 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${defaultFont.variable} antialiased bg-background`}>
         <Navbar />
-        <main className="pt-12 pb-16">
+        <main className="">
           {children}
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );

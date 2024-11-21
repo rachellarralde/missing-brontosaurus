@@ -4,10 +4,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image'
 
 const RecordIcon = () => (
-  <svg 
-    width="40" 
-    height="40" 
-    viewBox="0 0 24 24" 
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 24 24"
     className="text-foreground"
   >
     <path
@@ -18,10 +18,10 @@ const RecordIcon = () => (
 );
 
 const TurntableIcon = () => (
-  <svg 
-    width="40" 
-    height="40" 
-    viewBox="0 0 80 80" 
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 80 80"
     className="text-foreground"
   >
     <path
@@ -100,9 +100,9 @@ export default function Component() {
       if (dinoRef.current && obstacleRef.current) {
         const dinoRect = dinoRef.current.getBoundingClientRect()
         const obstacleRect = obstacleRef.current.getBoundingClientRect()
-        
+
         const collisionThreshold = 10
-        
+
         if (
           dinoRect.right - collisionThreshold > obstacleRect.left &&
           dinoRect.left + collisionThreshold < obstacleRect.right &&
@@ -121,20 +121,20 @@ export default function Component() {
     const gameLoop = () => {
       if (gameStarted && !gameOver) {
         checkCollision()
-        
+
         if (obstacleRef.current) {
           const obstacleRect = obstacleRef.current.getBoundingClientRect();
           if (obstacleRect.right < 0) {
             obstacleSpawnedRef.current = false;
           }
         }
-        
+
         if (!obstacleSpawnedRef.current) {
           const newType = getObstacleType(score);
           setObstacleType(newType);
           obstacleSpawnedRef.current = true;
         }
-        
+
         setScore(prev => prev + 1);
       }
       frameRef.current = requestAnimationFrame(gameLoop)
@@ -161,82 +161,82 @@ export default function Component() {
   }, [score, gameOver, highScore])
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] bg-background flex flex-col items-center justify-center p-4 font-mono">
-      {/* Hero Title */}
-      {/* <div className="absolute top-16 text-center">
-        <h1 className="text-4xl font-bold text-foreground mb-2">Missing Brontosaurus</h1>
-        <p className="text-muted-foreground text-sm">Record label</p>
-      </div> */}
+    /* container */
+    <div className="relative h-full w-full min-h-300 bg-background justify-center p-4 font-mono">
 
+      {/* game */}
+      <div className="absolute inset-0 w-full h-full">
+        <div className="text-center">
+          <p className="text-sm text-foreground">Press the Spacebar to start the game and jump.</p>
+        </div>
+
+        <div className="w-full max-w-2xl">
+          <div className="text-right mb-4 font-mono text-foreground">
+            <span className="mr-4">HI {highScore.toString().padStart(5, '0')}</span>
+            <span>{score.toString().padStart(5, '0')}</span>
+          </div>
+
+          <div className="relative h-32 border-b border-dotted border-muted-foreground">
+            {/* Background Clouds */}
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="cloud absolute top-4 right-20 w-12 h-4 opacity-10" />
+              <div className="cloud absolute top-8 right-48 w-16 h-4 opacity-10" />
+              <div className="cloud absolute top-6 left-32 w-12 h-4 opacity-10" />
+            </div>
+
+            {/* Dinosaur - Made Much Bigger */}
+            <div
+              ref={dinoRef}
+              className={`absolute left-8 bottom-0 transition-transform duration-500 ${isJumping ? 'translate-y-[-80px]' : 'translate-y-0'
+                }`}
+            >
+              <Image
+                src="/logos/game-image.png"
+                alt="Dinosaur"
+                width={100}
+                height={120}
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            {/* Obstacle - Records or Turntable */}
+            {gameStarted && (
+              <div
+                ref={obstacleRef}
+                className="absolute right-[-40px] bottom-0 animate-obstacle h-[40px] w-[40px]"
+                style={{
+                  animationDuration: `${speed}s`,
+                  willChange: 'transform'
+                }}
+              >
+                {obstacleType === 'turntable' ? (
+                  <div className="animate-spin-slow">
+                    <TurntableIcon />
+                  </div>
+                ) : (
+                  <div className="animate-spin-slow">
+                    <RecordIcon />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      
       {/* Game Over Modal */}
       {gameOver && (
-        <div className="absolute inset-0 bg-background/80 flex items-center justify-center backdrop-blur-sm">
-          <div className="bg-card p-8 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-bold text-foreground mb-4">Game Over!</h2>
-            <p className="text-muted-foreground mb-2">Score: {score}</p>
-            <p className="text-sm text-foreground">Press spacebar to play again</p>
+        <div className="absolute inset-0">
+          <div className="bg-background/80 flex items-center justify-center backdrop-blur-sm inset-0 p-0 m-0">
+            <div className="bg-card p-8 rounded-lg shadow-lg text-center">
+              <h2 className="text-2xl font-bold text-foreground mb-4">Game Over!</h2>
+              <p className="text-muted-foreground mb-2">Score: {score}</p>
+              <p className="text-sm text-foreground">Press spacebar to play again</p>
+            </div>
           </div>
         </div>
       )}
-
-      <div className="text-center mb-8">
-        <p className="text-sm mb-8 text-foreground">Press the Spacebar to start the game and jump.</p>
-      </div>
-
-      <div className="w-full max-w-2xl">
-        <div className="text-right mb-4 font-mono text-foreground">
-          <span className="mr-4">HI {highScore.toString().padStart(5, '0')}</span>
-          <span>{score.toString().padStart(5, '0')}</span>
-        </div>
-
-        <div className="relative h-32 border-b border-dotted border-muted-foreground">
-          {/* Background Clouds */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="cloud absolute top-4 right-20 w-12 h-4 opacity-10" />
-            <div className="cloud absolute top-8 right-48 w-16 h-4 opacity-10" />
-            <div className="cloud absolute top-6 left-32 w-12 h-4 opacity-10" />
-          </div>
-
-          {/* Dinosaur - Made Much Bigger */}
-          <div
-            ref={dinoRef}
-            className={`absolute left-8 bottom-0 transition-transform duration-500 ${
-              isJumping ? 'translate-y-[-80px]' : 'translate-y-0'
-            }`}
-          >
-            <Image
-              src="/logos/game-image.png"
-              alt="Dinosaur"
-              width={100}
-              height={120}
-              className="object-contain"
-              priority
-            />
-          </div>
-
-          {/* Obstacle - Records or Turntable */}
-          {gameStarted && (
-            <div
-              ref={obstacleRef}
-              className="absolute right-[-40px] bottom-0 animate-obstacle h-[40px] w-[40px]"
-              style={{
-                animationDuration: `${speed}s`,
-                willChange: 'transform'
-              }}
-            >
-              {obstacleType === 'turntable' ? (
-                <div className="animate-spin-slow">
-                  <TurntableIcon />
-                </div>
-              ) : (
-                <div className="animate-spin-slow">
-                  <RecordIcon />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
 
       <style jsx>{`
         .cloud {
