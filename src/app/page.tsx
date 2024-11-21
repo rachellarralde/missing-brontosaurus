@@ -1,7 +1,7 @@
 import DinoGame from '@/components/dino-game'
 import LatestRelease from '@/components/LatestRelease';
 
-const homePageItemStyle = "w-1/2";
+const homePageItemStyle = "w-1/2 p-2";
 
 export default function Home() {
   return (
