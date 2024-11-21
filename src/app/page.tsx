@@ -1,4 +1,5 @@
 import DinoGame from '@/components/dino-game'
+import TitledCard from '@/components/fragments/TitledCard';
 import LatestRelease from '@/components/LatestRelease';
 
 const homePageItemStyle = "w-1/2 p-2";
@@ -11,7 +12,9 @@ export default function Home() {
         <LatestRelease />
       </div>
       <div className={homePageItemStyle}>
-        <DinoGame />
+        <TitledCard title="&nbsp;" className="w-full h-full">
+          <DinoGame />
+        </TitledCard>
       </div>
     </div>
   );

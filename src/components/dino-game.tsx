@@ -162,7 +162,7 @@ export default function Component() {
 
   return (
     /* container */
-    <div className="relative h-full w-full min-h-300 bg-background justify-center p-4 font-mono">
+    <div className="relative w-full h-fit min-h-48 bg-background justify-center p-4 font-mono">
 
       {/* game */}
       <div className="absolute inset-0 w-full h-full">

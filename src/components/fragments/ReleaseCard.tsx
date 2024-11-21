@@ -8,7 +8,7 @@ interface ReleaseCardProps {
 
 export default function ReleaseCard({ info }: ReleaseCardProps) {
     return (
-        <div className="flex flex-col items-center border-2 border-foreground rounded-lg">
+        <div className="flex flex-col items-center">
             <h2 className="text-2xl font-sans">{info.artist} - {info.title}</h2>
             <div className="justify-center">
                 <div className="m-2">
