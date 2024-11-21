@@ -151,14 +151,14 @@ export default function Component() {
         cancelAnimationFrame(frameRef.current)
       }
     }
-  }, [gameStarted, gameOver])
+  }, [gameStarted, gameOver, handleKeyPress, score])
 
   useEffect(() => {
     setSpeed(calculateSpeed(score))
     if (gameOver && score > highScore) {
       setHighScore(score)
     }
-  }, [score, gameOver, highScore])
+  }, [score, gameOver, highScore, calculateSpeed])
 
   return (
     /* container */
@@ -224,7 +224,7 @@ export default function Component() {
           </div>
         </div>
       </div>
-      
+
       {/* Game Over Modal */}
       {gameOver && (
         <div className="absolute inset-0">
