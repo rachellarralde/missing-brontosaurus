@@ -7,7 +7,7 @@ import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Missing Brontosaurus",
-  description: "Record label",
+  description: "A Record Label by NAIAD",
   icons: {
     icon: [
       {
@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${defaultFont.variable} antialiased bg-background`}>
         <Navbar />
-        <main className="pt-12 pb-16">
+        <main className="w-full flex justify-center">
           {children}
         </main>
         <Footer />

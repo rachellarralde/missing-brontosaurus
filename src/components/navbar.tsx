@@ -6,7 +6,7 @@ const carnotaurusBottomMarginPercent = 0.28;
 
 export default function Navbar() {
   return (
-    <nav className="">
+    <nav className="mb-8">
       <Link href="/">
         <div className="grid xl:grid-cols-7 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-1">
           <div className="col-span-2 self-center">
