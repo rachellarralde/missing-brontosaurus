@@ -27,5 +27,5 @@ export const naiadAnaconda: ReleaseInfo = {
 
 /** alias to the latest release */
 export const latestRelease = naiadAnaconda;
-/** a list of all releaeses, in reverse chronological order */
+/** a list of all releaeses, in reverse chronological order, KD */
 export const allReleases: ReleaseInfo[] = [naiadAnaconda, naiadWyvern];
