@@ -1,11 +1,11 @@
-import { naiadWyvern } from "@/releases/releases";
+import { latestRelease } from "@/releases/releases";
 import ReleaseCard from "./fragments/ReleaseCard";
 import TitledCard from "./fragments/TitledCard";
 
 export default function LatestRelease() {
     return (
         <TitledCard title="Latest Release">
-            <ReleaseCard info={naiadWyvern} />
+            <ReleaseCard info={latestRelease} />
         </TitledCard>
     );
 }
