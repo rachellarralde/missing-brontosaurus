@@ -38,7 +38,19 @@ export const naiadOnyx: ReleaseInfo = {
     streamLink: "https://ditto.fm/onyx-naiad"
 }
 
-/** alias to the latest release */
-export const latestRelease = naiadOnyx;
+export const naiadBasilisk: ReleaseInfo = {
+    artist: "NAIAD",
+    title: "Basilisk",
+    path: "naiad/basilisk",
+    bandcampEmbed: `<iframe style="border: 0; width: ${bandcampPlayerWidth}px; height: ${bandcampPlayerHeight}px;" src="https://bandcamp.com/EmbeddedPlayer/track=3437279500/size=large/bgcol=333333/linkcol=2ebd35/tracklist=false/transparent=true/" seamless><a href="https://mynameisnaiad.bandcamp.com/track/basilisk">Basilisk by NAIAD</a></iframe>`,
+    buyLink: "https://mynameisnaiad.bandcamp.com/track/basilisk",
+    streamLink: "https://ditto.fm/basilisk"
+}
+
 /** a list of all releaeses, in reverse chronological order, KD */
-export const allReleases: ReleaseInfo[] = [naiadOnyx, naiadAnaconda, naiadWyvern];
+export const allReleases: ReleaseInfo[] = [naiadBasilisk, naiadOnyx, naiadAnaconda, naiadWyvern];
+
+/** alias to the latest release */
+export const getLatestRelease = () => {
+    return allReleases[0];
+}
