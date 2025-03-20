@@ -9,6 +9,7 @@ export interface ReleaseInfo {
 
 const bandcampPlayerWidth = 420;
 const bandcampPlayerHeight = 512;
+const bandcampAlbumPlayerHeight = 622;
 // bandcamp THEME = BLACK, LINKS = GREEN
 
 export const naiadWyvern: ReleaseInfo = {
@@ -47,8 +48,17 @@ export const naiadBasilisk: ReleaseInfo = {
     streamLink: "https://ditto.fm/basilisk"
 }
 
+export const saiad: ReleaseInfo = {
+    artist: "NAIAD & sigill",
+    title: "SAIAD",
+    path: "naiad_sigill/saiad",
+    bandcampEmbed: `<iframe style="border: 0; width: ${bandcampPlayerWidth}px; height: ${bandcampAlbumPlayerHeight}px;" src="https://bandcamp.com/EmbeddedPlayer/album=55386135/size=large/bgcol=333333/linkcol=2ebd35/tracklist=true/transparent=true/" seamless><a href="https://mynameisnaiad.bandcamp.com/album/saiad">SAIAD by NAIAD &amp; sigill</a></iframe>`,
+    buyLink: "https://mynameisnaiad.bandcamp.com/album/saiad",
+    streamLink: "https://ditto.fm/saiad"
+}
+
 /** a list of all releaeses, in reverse chronological order, KD */
-export const allReleases: ReleaseInfo[] = [naiadBasilisk, naiadOnyx, naiadAnaconda, naiadWyvern];
+export const allReleases: ReleaseInfo[] = [saiad, naiadBasilisk, naiadOnyx, naiadAnaconda, naiadWyvern];
 
 /** alias to the latest release */
 export const getLatestRelease = () => {
