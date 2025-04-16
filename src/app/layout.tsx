@@ -4,6 +4,7 @@ import { defaultFont } from "./typography";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SanityLive } from "@/sanity/live";
 
 export const metadata: Metadata = {
   title: "Missing Brontosaurus",
@@ -30,7 +31,9 @@ export default function RootLayout({
         <main className="w-full flex justify-center">
           {children}
         </main>
+        <div className="w-96 h-24">{ /* scroll past footer */ }</div>
         <Footer />
+        <SanityLive />
       </body>
     </html>
   );
