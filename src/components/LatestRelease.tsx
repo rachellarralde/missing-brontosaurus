@@ -1,4 +1,3 @@
-import { getLatestRelease } from "@/releases/releases";
 import ReleaseCard from "./fragments/ReleaseCard";
 import TitledCard from "./fragments/TitledCard";
 import { LATEST_RELEASE_QUERY, makeLocalReleaseInfo } from "@/sanity/releases";
