@@ -1,6 +1,8 @@
 import { ReleaseInfo } from "@/releases/releases";
 import { defineQuery } from "next-sanity";
 
+// TD
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const makeArtistString = (sanityRelease: any): string =>
 {
     if(sanityRelease.artists === undefined)
@@ -22,9 +24,10 @@ export const makeArtistString = (sanityRelease: any): string =>
     }
 }
 
+// TD
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const makeLocalReleaseInfo = (sanityRelease: any): ReleaseInfo =>
     {
-
         return {
             artist: makeArtistString(sanityRelease),
             title: sanityRelease.name,

@@ -1,6 +1,4 @@
-import { bandcampAlbumPlayerHeight, bandcampPlayerHeight, bandcampPlayerWidth, ReleaseInfo } from "@/releases/releases";
-import { Button } from "../ui/button";
-import Link from "next/link";
+import { bandcampAlbumPlayerHeight, bandcampPlayerHeight, bandcampPlayerWidth } from "@/releases/releases";
 
 interface BandcampEmbedProps {
     embedUrl: string;
