@@ -12,17 +12,17 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "sigill",
-    role: "Web Developer",
+    role: "Director of the Hunt",
     image: "/kevin.png",
   },
   {
     name: "SCHROEDS",
-    role: "Artist",
+    role: "Archeologist",
     image: "/SCHROEDS-disco.jpg",
   },
   {
     name: "Desmdy",
-    role: "Contributor",
+    role: "Lost & Found Events",
     image: "/desmdy.png",
   },
   {
