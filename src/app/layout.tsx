@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { defaultFont } from "./typography";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import EnhancedNavbar from "@/components/enhanced-navbar";
 import Footer from "@/components/footer";
 import { SanityLive } from "@/sanity/live";
 
@@ -27,11 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${defaultFont.variable} antialiased bg-background`}>
-        <Navbar />
-        <main className="w-full flex justify-center">
-          {children}
-        </main>
-        <div className="w-96 h-24">{ /* scroll past footer */ }</div>
+        <EnhancedNavbar />
+        <main className="w-full flex justify-center">{children}</main>
+        <div className="w-96 h-24">{/* scroll past footer */}</div>
         <Footer />
         <SanityLive />
       </body>
