@@ -8,7 +8,7 @@ const teamMembers: TeamMember[] = [
   {
     name: "NAIAD",
     role: "Founder",
-    image: "/brooke.png",
+    image: "/NAIAD.png",
   },
   {
     name: "sigill",
@@ -22,8 +22,8 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Desmdy",
-    role: "Lost & Found Events",
-    image: "/desmdy.png",
+    role: "Field Director",
+    image: "/Desmdy.JPG",
   },
   {
     name: "RVCHL",
