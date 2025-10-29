@@ -34,7 +34,7 @@ const teamMembers: TeamMember[] = [
 
 export default function TeamPage() {
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex flex-col items-center justify-center p-4">
+    <div className="min-h-[calc(100vh-8rem)] flex flex-col items-center p-4">
       <div className="max-w-4xl text-center space-y-8">
         <h1 className="text-4xl font-bold text-foreground mb-8">Team</h1>
 
@@ -57,17 +57,13 @@ export default function TeamPage() {
                     <div className="w-full h-full bg-muted rounded-full"></div>
                   )}
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">
+                <h3 className="text-4xl font-semibold text-foreground">
                   {member.name}
                 </h3>
-                <p className="text-sm">{member.role}</p>
+                <p className="text-xl">{member.role}</p>
               </div>
             ))}
           </div>
-
-          <p className="text-sm italic mt-12">
-            🚧 Team information is being updated. More details coming soon...
-          </p>
         </div>
       </div>
     </div>
