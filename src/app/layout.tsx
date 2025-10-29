@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={`${defaultFont.variable} antialiased bg-background`}>
         <EnhancedNavbar />
-        <main className="w-full flex justify-center">{children}</main>
+        <main className="w-full flex justify-center pt-10">{children}</main>
         <div className="w-96 h-24">{/* scroll past footer */}</div>
         <Footer />
         <SanityLive />

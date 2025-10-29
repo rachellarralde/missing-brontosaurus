@@ -321,7 +321,7 @@ export default function Component() {
 
       {/* Game Over Modal */}
       {gameOver && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div className="inset-0 z-50 flex items-center justify-center">
           <div className="bg-background/80 flex items-center justify-center backdrop-blur-sm inset-0 p-0 m-0">
             <div className="bg-card p-8 rounded-lg shadow-lg text-center">
               <h2 className="text-2xl font-bold text-foreground mb-4">Game Over!</h2>

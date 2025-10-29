@@ -35,7 +35,7 @@ function NavigationItemComponent({ item, isActive, onClick }: NavigationItemProp
       href={item.href}
       onClick={onClick}
       className={`
-        px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200
+        px-3 py-1 rounded-full text-xl font-medium transition-colors duration-200
         ${isActive 
           ? 'bg-white text-black' 
           : 'text-white hover:bg-white hover:bg-opacity-20'
@@ -65,7 +65,7 @@ export default function EnhancedNavbar() {
           <Link href="/" className="cursor-pointer block">
             <img
               src="/logos/tight-crop.png"
-              alt="A brontosaurus with a bold question mark"
+              alt="Missing Brontosaurus"
             />
           </Link>
 
