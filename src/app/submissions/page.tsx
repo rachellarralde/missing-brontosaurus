@@ -1,20 +1,27 @@
-'use client'
-
+import { getLogoSizeScaled } from '@/components/Logo';
+import { Button } from '@/components/ui/button';
 import { isDevelopment } from '@/lib/utils';
-import Turnstile, { useTurnstile } from "react-turnstile";
+import { fetchSubmissionSettingsForFrontend } from '@/sanity/submissionSettings';
+import Image from 'next/image';
+import Link from 'next/link';
+import { bodyColumnClasses } from '@/lib/styles'
 
-
-const kSiteKey = isDevelopment() ? "1x00000000000000000000AA" : "0x4AAAAAAB9qmdW2OM80tI12";
 
 export default async function SubmissionsPage() {
 
-    const handleVerify = (token: string) => {
-        window.location.href = `/api/v1/submissions?token=${token}`;
-    }
+    const status = await fetchSubmissionSettingsForFrontend();
 
-    return <div>
-        <Turnstile sitekey={kSiteKey}
-            onVerify={handleVerify}
-            theme="dark" />
-    </div>;
+    const { width: logoWidth, height: logoHeight } = getLogoSizeScaled();
+
+    return (
+        <div className={bodyColumnClasses + " w-full"}>
+            <div className="text-2xl font-sans">{status.enabled ? status.activeMessage : status.awayMessage}</div>
+            <div className="m-8">
+                {status.enabled && <Button className="text-2xl"><Link href="/submissions/start">Demo Submission Form</Link></Button>}
+            </div>
+            <div>
+                <Image src="/logos/tight-crop.png" alt="a missing brontosarus" width={logoWidth} height={logoHeight} />
+            </div>
+        </div>
+    )
 }

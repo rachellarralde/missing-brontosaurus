@@ -19,7 +19,8 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { href: '/', label: 'Home' },
   { href: '/team', label: 'Team' },
-  { href: '/releases', label: 'Releases' }
+  { href: '/releases', label: 'Releases' },
+  { href: '/submissions', label: "Submissions" }
 ];
 
 // Shared NavigationItem component for pill navigation styling
