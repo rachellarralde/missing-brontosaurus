@@ -27,7 +27,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "RVCHL",
-    role: "Web Developer",
+    role: "Museum Curator",
     image: "/RVCHL.JPG",
   },
 ];
