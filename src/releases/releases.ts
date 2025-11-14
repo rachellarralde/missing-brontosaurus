@@ -1,4 +1,5 @@
 export interface ReleaseInfo {
+    slug: string;
     artist: string;
     title: string;
     /** @deprecated */
@@ -10,6 +11,7 @@ export interface ReleaseInfo {
     buyLink?: string;
     streamLink?: string;
     releaseType?: string;
+    releaseDate?: Date
 }
 
 export const isReleaseSingle = (info: ReleaseInfo): boolean => {
