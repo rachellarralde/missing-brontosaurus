@@ -2,10 +2,10 @@
 
 import { getLogoSizeScaled } from '@/components/Logo';
 import { bodyColumnClasses } from '@/lib/styles';
-import { isDevelopment } from '@/lib/utils';
+import { getTurnstileKeyDemoSubmissions, getTurnstileSecretDemoSubmissions, isDevelopment } from '@/lib/environment';
 import Turnstile from "react-turnstile";
 
-const kSiteKey = isDevelopment() ? "1x00000000000000000000AA" : "0x4AAAAAAB9qmdW2OM80tI12";
+const kSiteKey = isDevelopment() ? "1x00000000000000000000AA" : getTurnstileKeyDemoSubmissions();
 
 export default function SubmissionsPage() {
     const { width: logoWidth, height: logoHeight } = getLogoSizeScaled();
@@ -14,7 +14,11 @@ export default function SubmissionsPage() {
         window.location.href = `/api/v1/submissions?token=${token}`;
     }
 
-    return <div className={bodyColumnClasses + " w-full"}>
+    if (kSiteKey === undefined) {
+        return (<span>this is bad. sorry.</span>);
+    }
+
+    return (<div className={bodyColumnClasses + " w-full"}>
         <div>One moment........</div>
         <div>
             <Turnstile sitekey={kSiteKey}
@@ -30,5 +34,5 @@ export default function SubmissionsPage() {
             />
         </div>
 
-    </div>;
+    </div>);
 }

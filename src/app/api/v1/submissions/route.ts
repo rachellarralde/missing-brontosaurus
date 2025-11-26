@@ -2,14 +2,17 @@
 
 import { redirect } from 'next/navigation'
 import { fetchSubmissionSettingsForBackend } from '@/sanity/submissionSettings';
+import { getTurnstileSecretDemoSubmissions, isDevelopment } from '@/lib/environment';
+import { NextResponse } from 'next/server';
+
+
+const kTurnstileSecret = isDevelopment() ? "1x0000000000000000000000000000000AA" : getTurnstileSecretDemoSubmissions();
 
 interface TurnstileResponse {
     "error-codes"?: string[];
     success: boolean;
     messages?: string[];
 }
-
-const kTurnstileSecret = "sup";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -23,17 +26,18 @@ export async function GET(request: Request) {
     if (!enabled) {
         redirect("/submissions");
         return;
-    } else {
-        redirect(formUrl);
-        return;
     }
 
+    const verifyBody = {
+        secret: kTurnstileSecret,
+        response: token,
+    }
     const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
         headers: {
             'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ token }),
+        body: JSON.stringify(verifyBody),
     });
     const data = await response.json() as TurnstileResponse;
 

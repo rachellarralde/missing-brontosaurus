@@ -1,6 +1,5 @@
 import { getLogoSizeScaled } from '@/components/Logo';
 import { Button } from '@/components/ui/button';
-import { isDevelopment } from '@/lib/utils';
 import { fetchSubmissionSettingsForFrontend } from '@/sanity/submissionSettings';
 import Image from 'next/image';
 import Link from 'next/link';
