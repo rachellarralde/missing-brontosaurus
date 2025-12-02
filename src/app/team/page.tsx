@@ -1,3 +1,5 @@
+import { makePageMetadata } from "@/lib/strings";
+
 interface TeamMember {
   name: string;
   role: string;
@@ -31,6 +33,8 @@ const teamMembers: TeamMember[] = [
     image: "/RVCHL.JPG",
   },
 ];
+
+export const metadata = makePageMetadata('Team');
 
 export default function TeamPage() {
   return (

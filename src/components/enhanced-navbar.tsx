@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import MaxText from "./ui/MaxText";
+import { getShowSubmissionsInNav } from "@/lib/environment";
 
 const carnotaurusTopMarginPercent = 0.19;
 const carnotaurusBottomMarginPercent = 0.28;
@@ -13,15 +14,20 @@ interface NavigationItem {
   label: string;
 }
 
+const getNavigationItems = (): NavigationItem[] => {
+  // Navigation items data structure for Home, Team, and Releases pages
+  const navigationItems: NavigationItem[] = [
+    { href: '/', label: 'Home' },
+    { href: '/team', label: 'Team' },
+    { href: '/releases', label: 'Releases' },
+  ];
 
+  if (getShowSubmissionsInNav()) {
+    navigationItems.push({ href: '/submissions', label: "Submissions" });
+  }
 
-// Navigation items data structure for Home, Team, and Releases pages
-const navigationItems: NavigationItem[] = [
-  { href: '/', label: 'Home' },
-  { href: '/team', label: 'Team' },
-  { href: '/releases', label: 'Releases' },
-  { href: '/submissions', label: "Submissions" }
-];
+  return navigationItems;
+};
 
 // Shared NavigationItem component for pill navigation styling
 interface NavigationItemProps {
@@ -73,7 +79,7 @@ export default function EnhancedNavbar() {
           {/* Static Pill Navigation - always visible, centered below logo */}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 z-10">
             <div className="bg-transparent border border-white rounded-full px-2 py-1 flex items-center gap-1">
-              {navigationItems.map((item) => (
+              {getNavigationItems().map((item) => (
                 <NavigationItemComponent
                   key={item.href}
                   item={item}
@@ -119,7 +125,7 @@ export default function EnhancedNavbar() {
           {/* Static Pill Navigation - always visible, centered below logo */}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 z-10">
             <div className="bg-transparent border border-white rounded-full px-2 py-1 flex items-center gap-1">
-              {navigationItems.map((item) => (
+              {getNavigationItems().map((item) => (
                 <NavigationItemComponent
                   key={item.href}
                   item={item}
@@ -173,7 +179,7 @@ export default function EnhancedNavbar() {
 
         {/* Navigation pills - always below the logo */}
         <div className="bg-transparent border border-white rounded-full px-2 py-1 flex items-center gap-1">
-          {navigationItems.map((item) => (
+          {getNavigationItems().map((item) => (
             <NavigationItemComponent
               key={item.href}
               item={item}
