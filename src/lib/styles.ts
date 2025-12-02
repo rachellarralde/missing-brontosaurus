@@ -1,0 +1,1 @@
+export const bodyColumnClasses = "flex flex-col items-center justify-center gap-8";

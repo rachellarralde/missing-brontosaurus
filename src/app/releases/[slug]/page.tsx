@@ -1,6 +1,9 @@
 import ReleaseCard from "@/components/fragments/ReleaseCard";
+import { makePageMetadata } from "@/lib/strings";
 import { sanityFetch } from "@/sanity/live";
 import { makeLocalReleaseInfo, SINGLE_RELEASE_QUERY } from "@/sanity/releases";
+
+export const metadata = makePageMetadata('Releases');
 
 export default async function ReleaseSinglePage({
     params,
