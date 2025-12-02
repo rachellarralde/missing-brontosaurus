@@ -3,8 +3,6 @@
 import { redirect } from 'next/navigation'
 import { fetchSubmissionSettingsForBackend } from '@/sanity/submissionSettings';
 import { getTurnstileSecretDemoSubmissions, isDevelopment } from '@/lib/environment';
-import { NextResponse } from 'next/server';
-
 
 const kTurnstileSecret = isDevelopment() ? "1x0000000000000000000000000000000AA" : getTurnstileSecretDemoSubmissions();
 

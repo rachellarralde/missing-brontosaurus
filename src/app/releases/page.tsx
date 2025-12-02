@@ -1,5 +1,5 @@
 import ReleaseCard from "@/components/fragments/ReleaseCard";
-import { makePageMetadata, makePageTitle } from "@/lib/strings";
+import { makePageMetadata } from "@/lib/strings";
 import { sanityFetch } from "@/sanity/live";
 import { makeLocalReleaseInfo, RELEASED_RELEASES_QUERY } from "@/sanity/releases";
 

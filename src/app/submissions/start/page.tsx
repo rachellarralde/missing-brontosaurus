@@ -2,9 +2,8 @@
 
 import { getLogoSizeScaled } from '@/components/Logo';
 import { bodyColumnClasses } from '@/lib/styles';
-import { getTurnstileKeyDemoSubmissions, getTurnstileSecretDemoSubmissions, isDevelopment } from '@/lib/environment';
+import { getTurnstileKeyDemoSubmissions, isDevelopment } from '@/lib/environment';
 import Turnstile from "react-turnstile";
-import { makePageMetadata } from '@/lib/strings';
 
 const kSiteKey = isDevelopment() ? "1x00000000000000000000AA" : getTurnstileKeyDemoSubmissions();
 

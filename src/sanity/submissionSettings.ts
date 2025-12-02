@@ -11,14 +11,23 @@ export const SUBMISSION_BACKEND_QUERY = defineQuery(`*[
   }`);
 
 
-const isResponseValid = (data: any) => {
-  return data !== undefined && data.length > 0 && data[0].enabled !== undefined;
+interface SubimssionSettingsBase {
+  enabled: boolean;
 }
 
-interface SubmissionSettingsBackendResult {
-  enabled: boolean;
+interface SubmissionSettingsBackendResult extends SubimssionSettingsBase {
   formUrl: string;
 }
+
+interface SubmissionSettingsFrontendResult extends SubimssionSettingsBase {
+  activeMessage: string;
+  awayMessage: string;
+}
+
+const isResponseValid = <T>(data: T[] | undefined): data is T[] => {
+  return data !== undefined && data.length > 0 && data[0] !== undefined && (data[0] as SubimssionSettingsBase).enabled !== undefined;
+}
+
 
 export const fetchSubmissionSettingsForBackend = async (): Promise<SubmissionSettingsBackendResult> => {
   const { data } = await sanityFetch({ query: SUBMISSION_BACKEND_QUERY });
@@ -38,11 +47,6 @@ export const SUBMISSION_FRONTEND_QUERY = defineQuery(`*[
     _id, enabled, activeMessage, awayMessage
   }`);
 
-interface SubmissionSettingsFrontendResult {
-  enabled: boolean;
-  activeMessage: string;
-  awayMessage: string;
-}
 
 export const fetchSubmissionSettingsForFrontend = async (): Promise<SubmissionSettingsFrontendResult> => {
   const { data } = await sanityFetch({ query: SUBMISSION_FRONTEND_QUERY });
