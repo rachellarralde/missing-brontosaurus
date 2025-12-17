@@ -5,6 +5,7 @@ import "./globals.css";
 import EnhancedNavbar from "@/components/enhanced-navbar";
 import Footer from "@/components/footer";
 import { SanityLive } from "@/sanity/live";
+import SimpleAnalytics from "@/components/SimpleAnalytics";
 
 export const metadata: Metadata = {
   title: "Missing Brontosaurus",
@@ -32,6 +33,7 @@ export default function RootLayout({
         <div className="w-96 h-24">{/* scroll past footer */}</div>
         <Footer />
         <SanityLive />
+        <SimpleAnalytics />
       </body>
     </html>
   );
