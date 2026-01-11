@@ -55,7 +55,7 @@ export const makeLocalReleaseInfo = (sanityRelease: Release): ReleaseInfo => {
     info.links.push({
       _key: sanityRelease.streamLink ?? "deprecatedBuyLink",
       _type: "releaseLink",
-      linkType: "Buy",
+      linkType: "Stream",
       url: sanityRelease.streamLink
     });
   }
