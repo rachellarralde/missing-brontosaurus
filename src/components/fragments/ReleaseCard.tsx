@@ -32,7 +32,7 @@ export default function ReleaseCard({ info }: ReleaseCardProps) {
                         const len = info.links.length;
                         const lastIsOdd = len % 2 !== 0;
                         const spanClass = lastIsOdd && index === len - 1 ? "col-span-2" : "";
-                        return <Button key={link.url} className={spanClass} ><Link href={link.url ?? ""} target="_blank" className="text-lg w-full">{getLinkText(info, link)}</Link></Button>;
+                        return <Button key={link.linkType ?? "" + link.url} className={spanClass} ><Link href={link.url ?? ""} target="_blank" className="text-lg w-full">{getLinkText(info, link)}</Link></Button>;
                     })}
                 </div>
             </div>
