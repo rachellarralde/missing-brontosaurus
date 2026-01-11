@@ -16,7 +16,7 @@ export default async function ReleaseSinglePage({
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <ReleaseCard info={info} key={info.title} />;
+      <ReleaseCard info={info} key={info.title} />
     </div>
   )
 } 

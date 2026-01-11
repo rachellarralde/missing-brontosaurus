@@ -1,6 +1,6 @@
 import { ReleaseInfo } from "@/releases/releases";
 import { defineQuery } from "next-sanity";
-import { Release } from "./sanity.types";
+import { Release, ReleaseLink } from "./sanity.types";
 import { sanityFetch } from "./live";
 
 // TD
@@ -32,16 +32,35 @@ export const parseCurrentSlug = (sanityResult: any): string => {
 // TD
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const makeLocalReleaseInfo = (sanityRelease: Release): ReleaseInfo => {
-  return {
+  const info = {
     slug: parseCurrentSlug(sanityRelease),
     artist: makeArtistString(sanityRelease),
     title: sanityRelease.name ?? "",
     bandcampEmbedUrl: sanityRelease.bandcampEmbedUrl,
-    buyLink: sanityRelease.buyLink,
-    streamLink: sanityRelease.streamLink,
+    links: sanityRelease.links ?? [],
     releaseType: sanityRelease.releaseType,
     releaseDate: sanityRelease.releaseDate ? new Date(sanityRelease.releaseDate) : undefined
   };
+
+  // deprecated: if the old links are specified, push them into the array
+  if (sanityRelease.buyLink !== undefined && sanityRelease.buyLink !== null && sanityRelease.buyLink !== "") {
+    info.links.push({
+      _key: sanityRelease.buyLink ?? "deprecatedBuyLink",
+      _type: "releaseLink",
+      linkType: "Buy",
+      url: sanityRelease.buyLink
+    });
+  }
+  if (sanityRelease.streamLink !== undefined && sanityRelease.streamLink !== null && sanityRelease.streamLink !== "") {
+    info.links.push({
+      _key: sanityRelease.streamLink ?? "deprecatedBuyLink",
+      _type: "releaseLink",
+      linkType: "Buy",
+      url: sanityRelease.streamLink
+    });
+  }
+
+  return info;
 };
 
 export const isBandcampEmbedUrlValid = (info: ReleaseInfo) => {
@@ -53,7 +72,7 @@ const RELEASED_RELEASES_QUERY = defineQuery(`*[
         && defined(slug.current)
         && releaseDate < now()
       ]{
-        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, buyLink, streamLink, releaseType
+        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, links, buyLink, streamLink, releaseType
       }|order(releaseDate desc)`);
 
 export const fetchReleasedReleases = async (): Promise<Release[]> => {
@@ -66,7 +85,7 @@ const SINGLE_RELEASE_QUERY = defineQuery(`*[
         && defined(slug.current)
         && slug.current == $slug 
       ]{
-        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, buyLink, streamLink, releaseType
+        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, links, buyLink, streamLink, releaseType
       }|order(releaseDate desc)[0]`);
 
 export const fetchSingleRelease = async (params: Promise<{ slug: string }>): Promise<Release> => {
@@ -79,10 +98,28 @@ const LATEST_RELEASE_QUERY = defineQuery(`*[
         && defined(slug.current)
         && releaseDate < now()
       ]{
-        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, buyLink, streamLink, releaseType
+        _id, name, slug, releaseDate, "artists": artists[]->name, bandcampEmbedUrl, links, buyLink, streamLink, releaseType
       }|order(releaseDate desc)[0]`);
 
 export const fetchLatestRelease = async (): Promise<Release> => {
   const { data } = await sanityFetch({ query: LATEST_RELEASE_QUERY });
   return data as Release;
+}
+
+export const getLinkText = (parent: ReleaseInfo, link: ReleaseLink) => {
+  if (link.label !== undefined) {
+    return link.label;
+  }
+  const isPreOrder = parent.releaseDate !== undefined ? parent.releaseDate > new Date() : false;
+  switch (link.linkType) {
+    case "Buy":
+      return isPreOrder ? "Pre Order" : "Buy";
+    case "Stream":
+      return isPreOrder ? "Pre Save" : "Stream";
+    case "Vinyl":
+      return isPreOrder ? "Pre Order Vinyl" : "Purchase Vinyl";
+    case "Other":
+    default:
+      return "Acquire";
+  }
 }
