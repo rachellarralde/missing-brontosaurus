@@ -1,11 +1,10 @@
 import ReleaseCard from "./fragments/ReleaseCard";
 import TitledCard from "./fragments/TitledCard";
-import { LATEST_RELEASE_QUERY, makeLocalReleaseInfo } from "@/sanity/releases";
-import { sanityFetch } from "@/sanity/live";
+import { fetchLatestRelease, makeLocalReleaseInfo } from "@/sanity/releases";
 
 export default async function LatestRelease() {
 
-    const { data: latestRelease } = await sanityFetch({ query: LATEST_RELEASE_QUERY });
+    const latestRelease = await fetchLatestRelease();
 
     return (
         <TitledCard title="Latest Release">

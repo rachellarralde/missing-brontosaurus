@@ -1,3 +1,5 @@
+import { ReleaseLink } from "@/sanity/sanity.types";
+
 export interface ReleaseInfo {
     slug: string;
     artist: string;
@@ -8,8 +10,7 @@ export interface ReleaseInfo {
     bandcampEmbed?: string;
     /** the URL the bandcamp ifram needs to src */
     bandcampEmbedUrl?: string;
-    buyLink?: string;
-    streamLink?: string;
+    links: ReleaseLink[],
     releaseType?: string;
     releaseDate?: Date
 }
